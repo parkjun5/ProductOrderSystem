@@ -9,6 +9,12 @@ import java.util.Map;
 public class Cart {
     Map<String, CartItem> cartMap = new HashMap<>();
 
+    public static Cart of(String productId, String quantity) {
+        Cart cart = new Cart();
+        cart.putItem(productId, quantity);
+        return cart;
+    }
+
     public void putItem(String orderedProductId, String orderedQuantity) {
         boolean isBlankProductId = StringUtils.isBlank(orderedProductId);
         boolean isBlankQuantity = StringUtils.isBlank(orderedQuantity);

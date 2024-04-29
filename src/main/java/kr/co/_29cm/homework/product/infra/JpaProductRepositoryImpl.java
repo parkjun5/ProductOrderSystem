@@ -21,21 +21,36 @@ public class JpaProductRepositoryImpl implements BatchProductRepository {
 
     @Override
     public void batchInsert(List<Product> products, int batchSize) {
-        jdbcTemplate.batchUpdate("INSERT INTO product (product_id, product_name, price, stock) VALUES (?, ?, ?, ?)",
-                new BatchPreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement ps, int idx) throws SQLException {
-                        ps.setLong(1, products.get(idx).getId());
-                        ps.setString(2, products.get(idx).getProductInfo().getProductName());
-                        ps.setBigDecimal(3, products.get(idx).getProductInfo().getPrice());
-                        ps.setInt(4, products.get(idx).getStock());
-                    }
+        String sql = """
+                     INSERT INTO
+                         product (product_id, product_name, price, stock)
+                     VALUES
+                         (?, ?, ?, ?)
+                     """;
+        jdbcTemplate.batchUpdate(sql, new ProductInsertSetter(products, batchSize));
+    }
 
-                    @Override
-                    public int getBatchSize() {
-                        return Math.min(products.size(), batchSize);
-                    }
-                }
-        );
+}
+
+class ProductInsertSetter implements BatchPreparedStatementSetter {
+    private final List<Product> products;
+    private final int batchSize;
+
+    ProductInsertSetter(List<Product> products, int batchSize) {
+        this.products = products;
+        this.batchSize = batchSize;
+    }
+
+    @Override
+    public void setValues(PreparedStatement ps, int idx) throws SQLException {
+        ps.setLong(1, products.get(idx).getId());
+        ps.setString(2, products.get(idx).getProductInfo().getProductName());
+        ps.setBigDecimal(3, products.get(idx).getProductInfo().getPrice());
+        ps.setInt(4, products.get(idx).getStock());
+    }
+
+    @Override
+    public int getBatchSize() {
+        return Math.min(products.size(), batchSize);
     }
 }

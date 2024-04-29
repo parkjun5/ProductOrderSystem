@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class ProductOrderProgramApplication {
 
-    private static final String BIG_INPUT_DATA_LOCATION = "src/main/resources/big_items.csv";
+    public static final String BIG_INPUT_DATA_LOCATION = "src/main/resources/big_items.csv";
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(ProductOrderProgramApplication.class, args);
@@ -16,7 +16,6 @@ public class ProductOrderProgramApplication {
         Cashier cashier = ctx.getBean(Cashier.class);
 
         cashier.inputInitData(BIG_INPUT_DATA_LOCATION);
-        cashier.activate();
     }
 
 }

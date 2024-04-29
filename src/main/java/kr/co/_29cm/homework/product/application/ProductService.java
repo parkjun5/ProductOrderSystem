@@ -6,6 +6,9 @@ import kr.co._29cm.homework.product.domain.Product;
 import kr.co._29cm.homework.product.domain.ProductRepository;
 import kr.co._29cm.homework.support.exception.SoldOutException;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +46,16 @@ public class ProductService {
                 .toList();
     }
 
+    public Page<Product> getOrderedAvailableProductsWithPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findProductsInStockWithPage(pageable);
+    }
+
     @Transactional
     public void batchInsert(List<CSVRecord> batch, int batchSize) {
         List<Product> products = batch.parallelStream()
-                .map(productConverter::convertFrom)
-                .toList();
+                                      .map(productConverter::convertFrom)
+                                      .toList();
         productRepository.batchInsert(products, batchSize);
     }
 

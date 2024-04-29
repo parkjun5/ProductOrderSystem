@@ -20,7 +20,6 @@ public class ProductReader {
 
     private final ProductService productService;
 
-
     public ProductReader(ProductService productService) {
         this.productService = productService;
     }

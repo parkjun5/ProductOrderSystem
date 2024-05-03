@@ -17,7 +17,7 @@
     해당 Lock을 얻지 못해서 업데이트를 할 수 없습니다.
     수정을 하기 위해서는 해당 트랜잭션을 제외한 모든 트랜잭션이 종료(commit) 되어야합니다.
 
-<img src="img/폐쇄적락.png" alt="락">
+<img src="img/PessimisticLock.png" alt="락">
 
 1. Transaction_1 에서 table의 Id 2번을 읽음 ( name = Karol )
 2. Transaction_2 에서 table의 Id 2번을 읽음 ( name = Karol )
@@ -31,7 +31,7 @@
     낙관적 락은 DB 충돌 상황을 개선할 수 있는 방법 중 2번째인 수정할 때 내가 먼저 이 값을 수정했다고 명시하여 다른 사람이 동일한 조건으로 값을 수정할 수 없게 하는 것입니다.
     그런데 잘 보면 이 특징은 DB에서 제공해주는 특징을 이용하는 것이 아닌 Application Level에서 잡아주는 Lock입니다.
 
-<img src="img/낙관적락.png" alt="락">
+<img src="img/OptimisticLock.png" alt="락">
 
 1. A가 table의 Id 2번을 읽음 ( name = Karol, version = 1 )
 2. B가 table의 Id 2번을 읽음 ( name = Karol, version = 1 )

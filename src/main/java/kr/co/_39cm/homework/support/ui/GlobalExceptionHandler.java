@@ -17,7 +17,7 @@ import java.util.IllegalFormatException;
 import java.util.NoSuchElementException;
 
 @Slf4j
-@RestControllerAdvice(basePackages = "kr.co._29cm.homework")
+@RestControllerAdvice(basePackages = "kr.co._39cm.homework")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({IllegalStateException.class, IllegalFormatException.class,

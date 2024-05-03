@@ -1,4 +1,4 @@
-//package kr.co._29cm.homework.support.jpa.hibernate;
+//package kr.co._39cm.homework.support.jpa.hibernate;
 //
 //import java.lang.annotation.ElementType;
 //import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
-//package kr.co._29cm.homework.support.jpa.hibernate;
+//package kr.co._39cm.homework.support.jpa.hibernate;
 //
-//import kr.co._29cm.homework.support.domain.AggregateRoot;
+//import kr.co._39cm.homework.support.domain.AggregateRoot;
 //import org.aspectj.lang.JoinPoint;
 //import org.aspectj.lang.annotation.AfterReturning;
 //import org.aspectj.lang.annotation.Aspect;
@@ -20,7 +20,7 @@
 //        this.eventPublisher = eventPublisher;
 //    }
 //
-//    @Pointcut("execution(* kr.co._29cm.homework..*.*(..)) && @annotation(transactional)")
+//    @Pointcut("execution(* kr.co._39cm.homework..*.*(..)) && @annotation(transactional)")
 //    public void transactionalMethods(Transactional transactional) {}
 //
 //    @AfterReturning(pointcut = "transactionalMethods(transactional)", returning = "result", argNames = "transactional,result")

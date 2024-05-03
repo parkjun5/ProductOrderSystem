@@ -1,6 +1,6 @@
-//package kr.co._29cm.homework.support.config;
+//package kr.co._39cm.homework.support.config;
 //
-//import kr.co._29cm.homework.support.jpa.hibernate.DomainEventMethodInterceptor;
+//import kr.co._39cm.homework.support.jpa.hibernate.DomainEventMethodInterceptor;
 //import org.springframework.aop.PointcutAdvisor;
 //import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 //import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -19,7 +19,7 @@
 //    @Bean
 //    public PointcutAdvisor pointcutAdvisor(DomainEventMethodInterceptor interceptor) {
 //        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-//        pointcut.setExpression("execution(* kr.co._29cm.homework.order.v2.application.*.*(..))");
+//        pointcut.setExpression("execution(* kr.co._39cm.homework.order.v2.application.*.*(..))");
 //        return new DefaultPointcutAdvisor(pointcut, interceptor);
 //    }
 //}

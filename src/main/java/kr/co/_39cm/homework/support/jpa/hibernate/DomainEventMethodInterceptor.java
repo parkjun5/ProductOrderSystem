@@ -1,7 +1,7 @@
-//package kr.co._29cm.homework.support.jpa.hibernate;
+//package kr.co._39cm.homework.support.jpa.hibernate;
 //
 //import io.micrometer.common.lang.Nullable;
-//import kr.co._29cm.homework.support.domain.AggregateRoot;
+//import kr.co._39cm.homework.support.domain.AggregateRoot;
 //import org.aopalliance.intercept.MethodInterceptor;
 //import org.aopalliance.intercept.MethodInvocation;
 //import org.springframework.context.ApplicationEventPublisher;

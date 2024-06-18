@@ -1,6 +1,6 @@
 package kr.co._39cm.homework;
 
-import kr.co._39cm.homework.order.application.Cashier;
+import kr.co._39cm.homework.order.common.application.Cashier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

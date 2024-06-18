@@ -1,11 +1,12 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.domain.Cart;
-import kr.co._39cm.homework.order.domain.Order;
+import kr.co._39cm.homework.order.v1.application.OrderService;
+import kr.co._39cm.homework.order.common.domain.Cart;
+import kr.co._39cm.homework.order.v1.domain.Order;
 import kr.co._39cm.homework.order.infra.InMemoryOrderRepository;
-import kr.co._39cm.homework.product.application.ProductConverter;
-import kr.co._39cm.homework.product.application.ProductService;
-import kr.co._39cm.homework.product.domain.Product;
+import kr.co._39cm.homework.product.v1.application.ProductConverter;
+import kr.co._39cm.homework.product.v1.application.ProductService;
+import kr.co._39cm.homework.product.v1.domain.Product;
 import kr.co._39cm.homework.product.infra.InMemoryProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,7 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.ui.OrderInputHandlerInterface;
+import kr.co._39cm.homework.order.common.application.OrderReceiver;
+import kr.co._39cm.homework.order.common.ui.OrderInputHandlerInterface;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

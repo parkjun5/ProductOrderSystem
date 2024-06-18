@@ -2,8 +2,9 @@ package kr.co._39cm.homework.product.application;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import kr.co._39cm.homework.product.domain.Product;
-import kr.co._39cm.homework.product.domain.ProductRepository;
+import kr.co._39cm.homework.product.v1.application.ProductService;
+import kr.co._39cm.homework.product.v1.domain.Product;
+import kr.co._39cm.homework.product.v1.domain.ProductRepository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import kr.co._39cm.homework.product.domain.ProductFixture;
 import org.junit.jupiter.api.AfterEach;

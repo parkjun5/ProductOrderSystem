@@ -1,8 +1,10 @@
 package kr.co._39cm.homework.product.application;
 
 import kr.co._39cm.homework.BigItemCreator;
-import kr.co._39cm.homework.order.domain.Cart;
-import kr.co._39cm.homework.product.domain.Product;
+import kr.co._39cm.homework.order.common.domain.Cart;
+import kr.co._39cm.homework.product.v1.application.ProductConverter;
+import kr.co._39cm.homework.product.v1.application.ProductService;
+import kr.co._39cm.homework.product.v1.domain.Product;
 import kr.co._39cm.homework.product.infra.InMemoryProductRepository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import kr.co._39cm.homework.product.domain.ProductFixture;

@@ -1,7 +1,7 @@
 package kr.co._39cm.homework.product.infra;
 
-import kr.co._39cm.homework.product.domain.Product;
-import kr.co._39cm.homework.product.domain.ProductRepository;
+import kr.co._39cm.homework.product.v1.domain.Product;
+import kr.co._39cm.homework.product.v1.domain.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

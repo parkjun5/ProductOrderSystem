@@ -9,10 +9,19 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 public class OrderEventHandler {
 
+    private final OrderItemStockDoubleChecker orderItemStockDoubleChecker;
+
+    public OrderEventHandler(OrderItemStockDoubleChecker orderItemStockDoubleChecker) {
+        this.orderItemStockDoubleChecker = orderItemStockDoubleChecker;
+    }
+
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleOrderEvent2(OrderV2 event) {
         OrderResponse response = event.toResponse();
-        System.out.println("AFTER_COMMIT Order ID: " + response);
+        boolean isAvailableOrderItem = orderItemStockDoubleChecker.doubleCheckOrderItemStock(response.orderItemResponses());
+        if (isAvailableOrderItem) {
+
+        }
     }
 
 }

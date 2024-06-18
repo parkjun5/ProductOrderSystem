@@ -1,10 +1,9 @@
-package kr.co._39cm.homework.product.v2.application;
+package kr.co._39cm.homework.product.v1.application;
 
 import kr.co._39cm.homework.order.common.domain.Cart;
 import kr.co._39cm.homework.order.common.domain.CartItem;
-import kr.co._39cm.homework.product.v2.domain.ProductId;
-import kr.co._39cm.homework.product.v2.domain.ProductV2;
-import kr.co._39cm.homework.product.v2.domain.ProductV2Repository;
+import kr.co._39cm.homework.product.v1.domain.Product;
+import kr.co._39cm.homework.product.v1.domain.ProductRepository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.data.domain.Page;
@@ -19,19 +18,19 @@ import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
-public class ProductV2Service {
+public class ProductService {
 
-    private final ProductV2Converter productConverter;
-    private final ProductV2Repository productRepository;
+    private final ProductConverter productConverter;
+    private final ProductRepository productRepository;
 
-    public ProductV2Service(ProductV2Converter productConverter, ProductV2Repository productRepository) {
+    public ProductService(ProductConverter productConverter, ProductRepository productRepository) {
         this.productConverter = productConverter;
         this.productRepository = productRepository;
     }
 
     public void validateStockInCart(Cart cart) {
         for (CartItem cartItem : cart.getCartItems()) {
-            ProductV2 product = productRepository.findById(ProductId.of(cartItem.getProductId()))
+            Product product = productRepository.findById(cartItem.getProductId())
                                                 .orElseThrow(() -> new NoSuchElementException("product가 존재하지 않습니다. productId =" + cartItem.getProductId()));
             boolean notEnoughStock = product.hasNotEnoughStock(cartItem.getQuantity());
             if (notEnoughStock) {
@@ -40,33 +39,33 @@ public class ProductV2Service {
         }
     }
 
-    public List<ProductV2> getOrderedAvailableProducts() {
+    public List<Product> getOrderedAvailableProducts() {
         return productRepository.findProductsInStock()
                 .stream()
-                .sorted(Comparator.comparing((ProductV2 productV2) -> productV2.getId().longValue()).reversed())
+                .sorted(Comparator.comparing(Product::getId).reversed())
                 .toList();
     }
 
-    public Page<ProductV2> getOrderedAvailableProductsWithPage(int page, int size) {
+    public Page<Product> getOrderedAvailableProductsWithPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productRepository.findProductsInStockWithPage(pageable);
     }
 
     @Transactional
     public void batchInsert(List<CSVRecord> batch, int batchSize) {
-        List<ProductV2> products = batch.parallelStream()
+        List<Product> products = batch.parallelStream()
                                       .map(productConverter::convertFrom)
                                       .toList();
         productRepository.batchInsert(products, batchSize);
     }
 
-    public ProductV2 getProductWithLockBy(Long productId) {
-        return productRepository.findByIdWithOptimisticLock(ProductId.of(productId))
+    public Product getProductWithLockBy(Long productId) {
+        return productRepository.findByIdWithPessimisticLock(productId)
                                 .orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional
-    public void deduct(ProductV2 product, int quantity) {
+    public void deduct(Product product, int quantity) {
         int deductedStock = product.deductedStock(quantity);
         productRepository.updateProductStock(product.getId(), product.getStock(), deductedStock);
     }

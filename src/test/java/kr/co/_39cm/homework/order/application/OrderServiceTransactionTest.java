@@ -1,9 +1,10 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.domain.OrderRepository;
+import kr.co._39cm.homework.order.v1.application.OrderService;
+import kr.co._39cm.homework.order.v1.domain.OrderRepository;
 import kr.co._39cm.homework.order.ui.MockOneReturnOrderInputHandler;
-import kr.co._39cm.homework.order.ui.OrderInputHandlerInterface;
-import kr.co._39cm.homework.product.domain.ProductRepository;
+import kr.co._39cm.homework.order.common.ui.OrderInputHandlerInterface;
+import kr.co._39cm.homework.product.v1.domain.ProductRepository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

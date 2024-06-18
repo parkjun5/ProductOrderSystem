@@ -1,5 +1,7 @@
 package kr.co._39cm.homework.product.domain;
 
+import kr.co._39cm.homework.product.v1.domain.Product;
+
 import java.math.BigDecimal;
 
 public class ProductFixture {

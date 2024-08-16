@@ -24,6 +24,8 @@ public class OrderItem extends DomainEntity<OrderItem, Long> {
 
     private int selectedQuantity;
 
+    private OrderStatus orderStatus = OrderStatus.ORDERED;
+
     protected OrderItem() {
 
     }
@@ -44,5 +46,25 @@ public class OrderItem extends DomainEntity<OrderItem, Long> {
 
     public BigDecimal getTotalItemsPrice() {
         return this.product.getProductInfo().getPrice().multiply(new BigDecimal(selectedQuantity));
+    }
+
+    public void accepted() {
+        this.orderStatus = OrderStatus.ACCEPTED;
+    }
+
+    public void rejected() {
+        this.orderStatus = OrderStatus.REJECTED;
+    }
+
+    public void delivering() {
+        this.orderStatus = OrderStatus.DELIVERING;
+    }
+
+    public void delivered() {
+        this.orderStatus = OrderStatus.DELIVERED;
+    }
+
+    public void completed() {
+        this.orderStatus = OrderStatus.COMPLETED;
     }
 }

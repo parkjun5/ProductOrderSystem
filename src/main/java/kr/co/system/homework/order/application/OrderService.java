@@ -60,10 +60,9 @@ public class OrderService {
         for (CartItem cartItem : cart.getCartItems()) {
             Product product = productService.getProductWithLockBy(cartItem.getProductId());
             orderItems.add(OrderItem.of(product, cartItem.getQuantity()));
-            productService.deduct(product, cartItem.getQuantity());
         }
 
-        Order order = new Order(orderItems);
+        Order order = Order.of(orderItems);
 
 //        order.registerEvent();
 

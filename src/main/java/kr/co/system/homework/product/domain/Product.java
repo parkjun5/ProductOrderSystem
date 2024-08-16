@@ -5,6 +5,7 @@ import kr.co.system.homework.support.domain.AggregateRoot;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -37,8 +38,8 @@ public class Product extends AggregateRoot<Product, Long> {
         return product;
     }
 
-    public boolean hasEnoughStock(int orderedQuantity, int newOrderQuantity) {
-        return this.stock >= (orderedQuantity + newOrderQuantity);
+    public boolean hasNotEnoughStock(int orderedQuantity, int newOrderQuantity) {
+        return this.stock < (orderedQuantity + newOrderQuantity);
     }
 
 }

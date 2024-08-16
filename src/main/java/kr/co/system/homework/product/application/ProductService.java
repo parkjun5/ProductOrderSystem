@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,5 +28,9 @@ public class ProductService {
 
     public Product getProductWithLockBy(Long productId) {
         return null;
+    }
+
+    public int getPreviousOrderedQuantityLessThanOrderTime(Long id, LocalDateTime orderTime) {
+        return 0;
     }
 }

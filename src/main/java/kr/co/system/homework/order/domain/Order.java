@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class Order extends AggregateRoot<Order, Long> {
 
     private BigDecimal totalPrice;
 
+    private LocalDateTime orderTime;
+
     @Transient
     private final DecimalFormat formatter = new DecimalFormat("#,##0");
 
@@ -40,10 +43,17 @@ public class Order extends AggregateRoot<Order, Long> {
 
     }
 
-    public Order(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-        this.totalPrice = orderItems.stream().map(OrderItem::getTotalItemsPrice)
+    public static Order of(List<OrderItem> orderItems) {
+        if (orderItems == null || orderItems.isEmpty()) {
+            throw new IllegalArgumentException("orderItems is null or empty");
+        }
+
+        Order order = new Order();
+        order.orderItems = orderItems;
+        order.totalPrice = orderItems.stream().map(OrderItem::getTotalItemsPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        order.orderTime = LocalDateTime.now();
+        return order;
     }
 
     public boolean hasDeliveryFee() {

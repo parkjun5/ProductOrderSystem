@@ -1,9 +1,12 @@
 package kr.co.system.homework.order.application;
 
 import kr.co.system.homework.order.domain.Order;
+import kr.co.system.homework.order.domain.OrderItem;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+
+import java.time.LocalDateTime;
 
 @Component
 public class OrderEventHandler {
@@ -16,10 +19,15 @@ public class OrderEventHandler {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleOrderEvent(Order order) {
-        boolean isAvailableOrderItem = orderItemStockDoubleChecker.doubleCheckOrderItemStock(order);
-        if (isAvailableOrderItem) {
+        LocalDateTime orderTime = order.getOrderTime();
+        for (OrderItem orderItem : order.getOrderItems()) {
+            boolean hasNotEnoughStock = orderItemStockDoubleChecker.hasNotEnoughStockInOrder(orderItem, orderTime);
+            if (hasNotEnoughStock) {
+                orderItem.rejected();
+            }
 
         }
+
     }
 
 }

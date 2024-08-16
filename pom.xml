@@ -14,7 +14,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>kr.co._39cm.homework.ProductOrderProgramApplication</mainClass>
+          <mainClass>kr.co.system.homework.ProductOrderProgramApplication</mainClass>
         </configuration>
       </plugin>
     </plugins>

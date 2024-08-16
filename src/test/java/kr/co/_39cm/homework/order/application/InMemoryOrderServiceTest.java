@@ -1,12 +1,12 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.v1.application.OrderService;
-import kr.co._39cm.homework.order.common.domain.Cart;
-import kr.co._39cm.homework.order.v1.domain.Order;
+import kr.co._39cm.homework.legacy.order.v1.application.OrderV1Service;
+import kr.co._39cm.homework.order.domain.Cart;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderV1;
 import kr.co._39cm.homework.order.infra.InMemoryOrderRepository;
-import kr.co._39cm.homework.product.v1.application.ProductConverter;
-import kr.co._39cm.homework.product.v1.application.ProductService;
-import kr.co._39cm.homework.product.v1.domain.Product;
+import kr.co._39cm.homework.legacy.product.v1.application.ProductV1Converter;
+import kr.co._39cm.homework.legacy.product.v1.application.ProductV1Service;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1;
 import kr.co._39cm.homework.product.infra.InMemoryProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -20,20 +20,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 class InMemoryOrderServiceTest {
 
     private final InMemoryProductRepository productRepository = new InMemoryProductRepository();
-    private final ProductService productService = new ProductService(new ProductConverter(), productRepository);
+    private final ProductV1Service productService = new ProductV1Service(new ProductV1Converter(), productRepository);
     private final InMemoryOrderRepository orderRepository = new InMemoryOrderRepository();
-    private final OrderService orderService = new OrderService(productService, orderRepository);
+    private final OrderV1Service orderService = new OrderV1Service(productService, orderRepository);
     @ParameterizedTest
     @ValueSource(strings = {"1", "3", "5", "7"})
     @DisplayName("주문된 만큼 재고를 변경한다.")
     void updateStockAfterOrder(String requiredQuantity) {
         // given
-        Product product = product("10");
+        ProductV1 product = product("10");
         productRepository.save(product);
         Cart cart = cart(product.getId().toString(), requiredQuantity);
 
         // when
-        Order order = orderService.createOrderOf(cart);
+        OrderV1 order = orderService.createOrderOf(cart);
 
         // then
         int except = 10 - Integer.parseInt(requiredQuantity);
@@ -46,9 +46,9 @@ class InMemoryOrderServiceTest {
     @DisplayName("모든 주문에 포함된 상품의 재고가 변경되어야한다.")
     void updateStockAfterOrders(String requiredQuantity) {
         // given
-        Product product1 = product("1", "10");
-        Product product2 = product("2", "15");
-        Product product3 = product("3", "20");
+        ProductV1 product1 = product("1", "10");
+        ProductV1 product2 = product("2", "15");
+        ProductV1 product3 = product("3", "20");
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);

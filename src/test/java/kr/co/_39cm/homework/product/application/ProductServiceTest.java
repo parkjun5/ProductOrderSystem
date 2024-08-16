@@ -2,9 +2,9 @@ package kr.co._39cm.homework.product.application;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import kr.co._39cm.homework.product.v1.application.ProductService;
-import kr.co._39cm.homework.product.v1.domain.Product;
-import kr.co._39cm.homework.product.v1.domain.ProductRepository;
+import kr.co._39cm.homework.legacy.product.v1.application.ProductV1Service;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1Repository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import kr.co._39cm.homework.product.domain.ProductFixture;
 import org.junit.jupiter.api.AfterEach;
@@ -24,9 +24,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ProductServiceTest {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductV1Repository productRepository;
     @Autowired
-    private ProductService productService;
+    private ProductV1Service productService;
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
@@ -41,16 +41,16 @@ class ProductServiceTest {
     void findByIdWithLock2() {
         // given
         String quantityString = "100";
-        Product savedProduct = productRepository.save(ProductFixture.product(quantityString));
+        ProductV1 savedProduct = productRepository.save(ProductFixture.product(quantityString));
 
         // when
         for (int idx = 1; idx <= 100; idx++) {
             TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-            Product productWithLock = productService.getProductWithLockBy(savedProduct.getId());
+            ProductV1 productWithLock = productService.getProductWithLockBy(savedProduct.getId());
             productService.deduct(productWithLock, 1);
             // then
             transactionManager.commit(status);
-            Product result = productService.getProductWithLockBy(productWithLock.getId());
+            ProductV1 result = productService.getProductWithLockBy(productWithLock.getId());
             assertThat(result.getStock()).isEqualTo(Integer.parseInt(quantityString) - idx);
         }
     }
@@ -60,10 +60,10 @@ class ProductServiceTest {
     void deduct() {
         // given
         String quantityString = "1";
-        Product savedProduct = productRepository.save(ProductFixture.product(quantityString));
+        ProductV1 savedProduct = productRepository.save(ProductFixture.product(quantityString));
 
         // when
-        Product productWithLock = productService.getProductWithLockBy(savedProduct.getId());
+        ProductV1 productWithLock = productService.getProductWithLockBy(savedProduct.getId());
         int tooManyQuantity = Integer.MAX_VALUE;
         // then
         assertThatThrownBy(() -> productService.deduct(productWithLock, tooManyQuantity))

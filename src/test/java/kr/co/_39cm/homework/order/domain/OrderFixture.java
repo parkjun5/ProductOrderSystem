@@ -1,17 +1,17 @@
 package kr.co._39cm.homework.order.domain;
 
-import kr.co._39cm.homework.order.v1.domain.Order;
-import kr.co._39cm.homework.order.v1.domain.OrderItem;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderV1;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderItemV1;
 
 import java.util.List;
 
 public class OrderFixture {
 
-    public static Order order(OrderItem e1) {
+    public static OrderV1 order(OrderItemV1 e1) {
         return order(List.of(e1));
     }
 
-    public static Order order(List<OrderItem> e11) {
-        return new Order(e11);
+    public static OrderV1 order(List<OrderItemV1> e11) {
+        return new OrderV1(e11);
     }
 }

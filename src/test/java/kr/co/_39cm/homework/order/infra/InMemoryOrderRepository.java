@@ -1,16 +1,16 @@
 package kr.co._39cm.homework.order.infra;
 
-import kr.co._39cm.homework.order.v1.domain.Order;
-import kr.co._39cm.homework.order.v1.domain.OrderRepository;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderV1;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderV1Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryOrderRepository implements OrderRepository {
-    private final Map<Long, Order> orders = new HashMap<>();
+public class InMemoryOrderRepository implements OrderV1Repository {
+    private final Map<Long, OrderV1> orders = new HashMap<>();
 
     @Override
-    public Order save(Order order) {
+    public OrderV1 save(OrderV1 order) {
         return orders.put(order.getId(), order);
     }
 

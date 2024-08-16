@@ -1,7 +1,7 @@
 package kr.co._39cm.homework.product.infra;
 
-import kr.co._39cm.homework.product.v1.domain.Product;
-import kr.co._39cm.homework.product.v1.domain.ProductRepository;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -11,41 +11,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InMemoryProductRepository implements ProductRepository {
-    private final Map<Long, Product> products = new HashMap<>();
+public class InMemoryProductRepository implements ProductV1Repository {
+    private final Map<Long, ProductV1> products = new HashMap<>();
 
     @Override
-    public Optional<Product> findById(Long productId) {
+    public Optional<ProductV1> findById(Long productId) {
         return Optional.ofNullable(products.get(productId));
     }
 
     @Override
-    public List<Product> findProductsInStock() {
+    public List<ProductV1> findProductsInStock() {
         return products.values().stream().filter(it -> it.getStock() > 0).toList();
     }
 
     @Override
-    public Page<Product> findProductsInStockWithPage(Pageable pageable) {
-        List<Product> filteredProducts = products.values().stream()
+    public Page<ProductV1> findProductsInStockWithPage(Pageable pageable) {
+        List<ProductV1> filteredProducts = products.values().stream()
                 .filter(product -> product.getStock() > 0)
                 .toList();
 
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), filteredProducts.size());
-        List<Product> pageContent = filteredProducts.subList(start, end);
+        List<ProductV1> pageContent = filteredProducts.subList(start, end);
 
         return new PageImpl<>(pageContent, pageable, filteredProducts.size());
     }
 
     @Override
-    public void batchInsert(List<Product> products, int batchSize) {
-        for (Product product : products) {
+    public void batchInsert(List<ProductV1> products, int batchSize) {
+        for (ProductV1 product : products) {
             this.products.put(product.getId(), product);
         }
     }
 
     @Override
-    public Product save(Product product) {
+    public ProductV1 save(ProductV1 product) {
         return products.put(product.getId(), product);
     }
 
@@ -55,7 +55,7 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findByIdWithPessimisticLock(Long productId) {
+    public Optional<ProductV1> findByIdWithPessimisticLock(Long productId) {
         return Optional.of(products.get(productId));
     }
 

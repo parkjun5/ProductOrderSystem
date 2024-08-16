@@ -1,10 +1,10 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.v1.application.OrderService;
-import kr.co._39cm.homework.order.v1.domain.OrderRepository;
+import kr.co._39cm.homework.legacy.order.v1.application.OrderV1Service;
+import kr.co._39cm.homework.legacy.order.v1.domain.OrderV1Repository;
 import kr.co._39cm.homework.order.ui.MockOneReturnOrderInputHandler;
-import kr.co._39cm.homework.order.common.ui.OrderInputHandlerInterface;
-import kr.co._39cm.homework.product.v1.domain.ProductRepository;
+import kr.co._39cm.homework.order.ui.OrderInputHandlerInterface;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1Repository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,11 +26,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class OrderServiceTransactionTest {
 
     @Autowired
-    private OrderService orderService;
+    private OrderV1Service orderService;
     @Autowired
-    private ProductRepository productRepository;
+    private ProductV1Repository productRepository;
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderV1Repository orderRepository;
     private final OrderInputHandlerInterface orderInputHandler = new MockOneReturnOrderInputHandler();
 
     @AfterEach

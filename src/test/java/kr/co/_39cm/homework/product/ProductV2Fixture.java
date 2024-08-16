@@ -1,6 +1,6 @@
 package kr.co._39cm.homework.product;
 
-import kr.co._39cm.homework.product.v2.domain.ProductV2;
+import kr.co._39cm.homework.legacy.product.v2.domain.ProductV2;
 
 import java.math.BigDecimal;
 

@@ -1,13 +1,12 @@
 package kr.co._39cm.homework.order.application;
 
-import kr.co._39cm.homework.order.common.domain.Cart;
+import kr.co._39cm.homework.order.domain.Cart;
 import kr.co._39cm.homework.order.ui.MockOneReturnOrderInputHandler;
-import kr.co._39cm.homework.order.common.ui.OrderInputHandlerInterface;
-import kr.co._39cm.homework.order.v2.application.OrderV2Service;
-import kr.co._39cm.homework.order.v2.domain.OrderV2Repository;
-import kr.co._39cm.homework.order.v2.ui.OrderResponse;
-import kr.co._39cm.homework.product.v2.domain.ProductV2;
-import kr.co._39cm.homework.product.v2.domain.ProductV2Repository;
+import kr.co._39cm.homework.order.ui.OrderInputHandlerInterface;
+import kr.co._39cm.homework.order.domain.OrderV2Repository;
+import kr.co._39cm.homework.order.ui.OrderResponse;
+import kr.co._39cm.homework.legacy.product.v2.domain.ProductV2;
+import kr.co._39cm.homework.legacy.product.v2.domain.ProductV2Repository;
 import kr.co._39cm.homework.product.ProductV2Fixture;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

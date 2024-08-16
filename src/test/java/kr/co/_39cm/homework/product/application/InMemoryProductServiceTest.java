@@ -1,10 +1,10 @@
 package kr.co._39cm.homework.product.application;
 
 import kr.co._39cm.homework.BigItemCreator;
-import kr.co._39cm.homework.order.common.domain.Cart;
-import kr.co._39cm.homework.product.v1.application.ProductConverter;
-import kr.co._39cm.homework.product.v1.application.ProductService;
-import kr.co._39cm.homework.product.v1.domain.Product;
+import kr.co._39cm.homework.order.domain.Cart;
+import kr.co._39cm.homework.legacy.product.v1.application.ProductV1Converter;
+import kr.co._39cm.homework.legacy.product.v1.application.ProductV1Service;
+import kr.co._39cm.homework.legacy.product.v1.domain.ProductV1;
 import kr.co._39cm.homework.product.infra.InMemoryProductRepository;
 import kr.co._39cm.homework.support.exception.SoldOutException;
 import kr.co._39cm.homework.product.domain.ProductFixture;
@@ -31,13 +31,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class InMemoryProductServiceTest {
 
     private final InMemoryProductRepository productRepository = new InMemoryProductRepository();
-    private final ProductService productService = new ProductService(new ProductConverter(), productRepository);
+    private final ProductV1Service productService = new ProductV1Service(new ProductV1Converter(), productRepository);
 
     @Test
     @DisplayName("재고가 충분한 지 확인한다.")
     void validateStockForOrder() {
         // given
-        Product product = ProductFixture.product();
+        ProductV1 product = ProductFixture.product();
         productRepository.save(product);
 
         // when
@@ -51,7 +51,7 @@ class InMemoryProductServiceTest {
     @DisplayName("재고가 부족하면 SoldOutException이 발생한다.")
     void validateStockForOrder2() {
         // given
-        Product product = ProductFixture.product();
+        ProductV1 product = ProductFixture.product();
         productRepository.save(product);
 
         // when
@@ -68,11 +68,11 @@ class InMemoryProductServiceTest {
     @DisplayName("재고가 1이상인 주문가능한 상품들만 가져온다.")
     void getAvailableProducts() {
         // given
-        Product product1 = ProductFixture.product("1", "10");
-        Product product2 = ProductFixture.product("2", "15");
-        Product product3 = ProductFixture.product("3", "20");
-        Product product4 = ProductFixture.product("4", "0");
-        Product product5 = ProductFixture.product("5", "-1");
+        ProductV1 product1 = ProductFixture.product("1", "10");
+        ProductV1 product2 = ProductFixture.product("2", "15");
+        ProductV1 product3 = ProductFixture.product("3", "20");
+        ProductV1 product4 = ProductFixture.product("4", "0");
+        ProductV1 product5 = ProductFixture.product("5", "-1");
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);
@@ -80,7 +80,7 @@ class InMemoryProductServiceTest {
         productRepository.save(product5);
 
         // when
-        List<Product> result = productService.getOrderedAvailableProducts();
+        List<ProductV1> result = productService.getOrderedAvailableProducts();
 
         // then
         assertThat(result).hasSize(3);
@@ -98,7 +98,7 @@ class InMemoryProductServiceTest {
         productService.batchInsert(csvRecords, 5_000);
 
         // then
-        List<Product> firstResult = productService.getOrderedAvailableProducts();
+        List<ProductV1> firstResult = productService.getOrderedAvailableProducts();
         assertThat(firstResult).hasSize(5_000);
     }
 

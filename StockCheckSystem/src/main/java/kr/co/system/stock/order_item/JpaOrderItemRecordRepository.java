@@ -1,8 +1,6 @@
-package kr.co.system.homework.order.infra;
+package kr.co.system.stock.order_item;
 
 import jakarta.persistence.LockModeType;
-import kr.co.system.homework.order.domain.OrderItemRecord;
-import kr.co.system.homework.order.domain.OrderItemRecordRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;

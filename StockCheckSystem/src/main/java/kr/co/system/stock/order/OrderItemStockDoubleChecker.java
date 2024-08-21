@@ -1,13 +1,10 @@
-package kr.co.system.homework.order.application;
+package kr.co.system.stock.order;
 
-import jakarta.persistence.OptimisticLockException;
-import kr.co.system.homework.order.domain.OrderItem;
-import kr.co.system.homework.order.domain.OrderItemRecord;
-import org.hibernate.exception.LockAcquisitionException;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
+import kr.co.system.stock.order_item.OrderItem;
+import kr.co.system.stock.order_item.OrderItemRecord;
+import kr.co.system.stock.order_item.OrderItemService;
+import kr.co.system.stock.order_item.OrderedItemRecordService;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -25,11 +22,7 @@ public class OrderItemStockDoubleChecker {
         this.orderedItemRecordService = orderedItemRecordService;
     }
 
-    @Retryable(
-            retryFor = LockAcquisitionException.class,
-            backoff = @Backoff(delay = 500)
-    )
-    @Transactional(timeout = 2000, isolation = Isolation.REPEATABLE_READ)
+    @Transactional
     public void checkOrderItemHasEnoughStock(OrderItem orderItem) {
         List<OrderItemRecord> orderItemRecordsWithLock = orderedItemRecordService.getOrderItemRecordsWithLockBy(orderItem.getProductId());
         int alreadyOrderedQuantity = orderItemRecordsWithLock.stream()

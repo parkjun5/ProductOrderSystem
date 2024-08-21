@@ -1,4 +1,4 @@
-package kr.co.system.homework.order.domain;
+package kr.co.system.stock.order_item;
 
 import jakarta.persistence.*;
 import lombok.Getter;

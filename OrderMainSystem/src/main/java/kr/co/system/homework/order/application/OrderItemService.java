@@ -23,10 +23,4 @@ public class OrderItemService {
         );
         return orderedQuantity != null ? orderedQuantity : 0;
     }
-
-    @Transactional
-    public void checkHasEnoughStock(OrderItem orderItem, int alreadyOrderedQuantity) {
-        orderItem.updateOrderItemStatusBasedOnStock(alreadyOrderedQuantity);
-        jpaOrderItemRepository.save(orderItem);
-    }
 }

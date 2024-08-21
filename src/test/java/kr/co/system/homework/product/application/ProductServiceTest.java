@@ -6,7 +6,7 @@ import kr.co.system.homework.legacy.product.v1.application.ProductV1Service;
 import kr.co.system.homework.legacy.product.v1.domain.ProductV1;
 import kr.co.system.homework.legacy.product.v1.domain.ProductV1Repository;
 import kr.co.system.homework.support.exception.SoldOutException;
-import kr.co.system.homework.product.domain.ProductFixture;
+import kr.co.system.homework.product.domain.ProductV1Fixture;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import static kr.co.system.homework.product.domain.ProductFixture.product;
+import static kr.co.system.homework.product.domain.ProductV1Fixture.product;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,7 +41,7 @@ class ProductServiceTest {
     void findByIdWithLock2() {
         // given
         String quantityString = "100";
-        ProductV1 savedProduct = productRepository.save(ProductFixture.product(quantityString));
+        ProductV1 savedProduct = productRepository.save(ProductV1Fixture.product(quantityString));
 
         // when
         for (int idx = 1; idx <= 100; idx++) {
@@ -60,7 +60,7 @@ class ProductServiceTest {
     void deduct() {
         // given
         String quantityString = "1";
-        ProductV1 savedProduct = productRepository.save(ProductFixture.product(quantityString));
+        ProductV1 savedProduct = productRepository.save(ProductV1Fixture.product(quantityString));
 
         // when
         ProductV1 productWithLock = productService.getProductWithLockBy(savedProduct.getId());

@@ -18,6 +18,7 @@ public class ProductOrderProgramApplication {
         Cashier cashier = ctx.getBean(Cashier.class);
 
         cashier.inputInitData(BIG_INPUT_DATA_LOCATION);
+        cashier.activate();
     }
 
 }

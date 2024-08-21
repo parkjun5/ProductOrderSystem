@@ -1,6 +1,7 @@
 package kr.co.system.homework.order.domain;
 
 import jakarta.persistence.*;
+import kr.co.system.homework.product.application.exception.NotEnoughStockInProduct;
 import kr.co.system.homework.product.domain.Product;
 import kr.co.system.homework.support.domain.DomainEntity;
 import lombok.Getter;
@@ -24,7 +25,8 @@ public class OrderItem extends DomainEntity<OrderItem, Long> {
 
     private int selectedQuantity;
 
-    private OrderStatus orderStatus = OrderStatus.ORDERED;
+    @Enumerated(EnumType.STRING)
+    private OrderItemStatus orderItemStatus = OrderItemStatus.ORDERED;
 
     protected OrderItem() {
 
@@ -49,22 +51,35 @@ public class OrderItem extends DomainEntity<OrderItem, Long> {
     }
 
     public void accepted() {
-        this.orderStatus = OrderStatus.ACCEPTED;
+        this.orderItemStatus = OrderItemStatus.ACCEPTED;
     }
 
-    public void rejected() {
-        this.orderStatus = OrderStatus.REJECTED;
+    public void canceled() {
+        this.orderItemStatus = OrderItemStatus.CANCELED;
     }
 
     public void delivering() {
-        this.orderStatus = OrderStatus.DELIVERING;
+        this.orderItemStatus = OrderItemStatus.DELIVERING;
     }
 
     public void delivered() {
-        this.orderStatus = OrderStatus.DELIVERED;
+        this.orderItemStatus = OrderItemStatus.DELIVERED;
     }
 
     public void completed() {
-        this.orderStatus = OrderStatus.COMPLETED;
+        this.orderItemStatus = OrderItemStatus.COMPLETED;
+    }
+
+    public void updateOrderItemStatusBasedOnStock(int alreadyOrderedQuantity) {
+        try {
+            product.ensureOrderStock(this.selectedQuantity, alreadyOrderedQuantity);
+            this.accepted();
+        } catch (NotEnoughStockInProduct ex) {
+            this.canceled();
+        }
+    }
+
+    public long getProductId() {
+        return this.product.getId();
     }
 }

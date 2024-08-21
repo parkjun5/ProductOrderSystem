@@ -24,7 +24,7 @@ public class OrderController {
                                               @PathVariable(name = "quantity") String quantity
     ) {
         Cart cart = Cart.of(productId, quantity);
-        OrderResponse orderResponse = orderService.createOrderOf(cart);
+        OrderResponse orderResponse = orderService.createOrderBy(cart);
         String body = """
                 OrderId => %s
                 Order Delivery Fee => %s
@@ -37,7 +37,7 @@ public class OrderController {
                                                 @PathVariable(name = "quantity") String quantity
     ) {
         Cart cart = Cart.of(productId, quantity);
-        OrderResponse response = orderService.createOrderOf(cart);
+        OrderResponse response = orderService.createOrderBy(cart);
         String body = """
                 OrderId => %s
                 Total Price => %s

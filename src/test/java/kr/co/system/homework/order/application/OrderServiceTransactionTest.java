@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static kr.co.system.homework.order.domain.CartFixture.cart;
-import static kr.co.system.homework.product.domain.ProductFixture.product;
+import static kr.co.system.homework.product.domain.ProductV1Fixture.product;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest

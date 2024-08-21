@@ -2,9 +2,12 @@ package kr.co.system.homework.product.infra;
 
 
 import jakarta.persistence.LockModeType;
+import kr.co.system.homework.order.domain.OrderItemStatus;
 import kr.co.system.homework.product.domain.BatchProductRepository;
 import kr.co.system.homework.product.domain.Product;
 import kr.co.system.homework.product.domain.ProductRepository;
+import kr.co.system.homework.product.domain.ProductStatus;
+import kr.co.system.homework.product.ui.dto.ProductStockView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,8 +30,36 @@ public interface JpaProductRepository extends JpaRepository<Product, Long>,
     @Override
     List<Product> findAll();
 
-    @Query("SELECT p FROM Product p WHERE p.stock > 0")
-    List<Product> findProductsInStock();
+    @Query(
+        """
+        SELECT
+             new kr.co.system.homework.product.ui.dto.ProductStockView(
+                p.id,
+                p.productInfo.productName,
+                p.productInfo.price,
+                p.productInfo.productStatus,
+                p.version,
+                (p.stock - COALESCE(oi.orderedQuantity, 0))
+             )
+         FROM
+             Product p
+         LEFT JOIN
+             (
+                 SELECT
+                     oi.product.id AS productId,
+                     SUM(oi.selectedQuantity) AS orderedQuantity
+                 FROM
+                     OrderItem oi
+                 WHERE
+                     oi.orderItemStatus NOT IN (:excludedStatuses)
+                 GROUP BY
+                     oi.product.id
+             ) oi ON p.id = oi.productId
+         WHERE
+             p.productInfo.productStatus = :productStatus
+        """)
+    List<ProductStockView> findSellingProducts(@Param("productStatus") ProductStatus productStatus,
+                                               @Param("excludedStatuses") List<OrderItemStatus> excludedStatuses);
 
     @Lock(value = LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     @Query("SELECT p FROM Product p WHERE p.id = :productId")

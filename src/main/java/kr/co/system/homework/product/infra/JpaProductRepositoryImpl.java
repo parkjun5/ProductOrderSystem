@@ -23,9 +23,9 @@ public class JpaProductRepositoryImpl implements BatchProductRepository {
     public void batchInsert(List<Product> products, int batchSize) {
         String sql = """
                 INSERT INTO
-                    product_v2 (product_id, product_name, price, stock, version)
+                    product (product_id, product_name, price, stock, version, product_status)
                 VALUES
-                    (?, ?, ?, ?, ?)
+                    (?, ?, ?, ?, ?, ?)
                 """;
         jdbcTemplate.batchUpdate(sql, new ProductInsertSetter(products, batchSize));
     }
@@ -46,6 +46,7 @@ public class JpaProductRepositoryImpl implements BatchProductRepository {
             ps.setBigDecimal(3, products.get(idx).getProductInfo().getPrice());
             ps.setInt(4, products.get(idx).getStock());
             ps.setLong(5, products.get(idx).getVersion());
+            ps.setString(6, products.get(idx).getProductInfo().getProductStatus().name());
         }
 
         @Override

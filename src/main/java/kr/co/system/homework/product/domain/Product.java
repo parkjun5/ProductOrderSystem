@@ -1,6 +1,7 @@
 package kr.co.system.homework.product.domain;
 
 import jakarta.persistence.*;
+import kr.co.system.homework.product.application.exception.NotEnoughStockInProduct;
 import kr.co.system.homework.support.domain.AggregateRoot;
 import lombok.Getter;
 
@@ -30,16 +31,62 @@ public class Product extends AggregateRoot<Product, Long> {
     protected Product() {
     }
 
-    public static Product of(long id, String name, BigDecimal price, int stock) {
-        Product product = new Product();
-        product.id = id;
-        product.productInfo = new ProductInfo(name, price);
-        product.stock = stock;
-        return product;
+    public void ensureOrderStock(int newQuantity, int alreadyOrderedQuantity) {
+        int newOrderStock = newQuantity + alreadyOrderedQuantity;
+        if (this.stock < newOrderStock) {
+            throw new NotEnoughStockInProduct(this.getId());
+        }
     }
 
-    public boolean hasNotEnoughStock(int orderedQuantity, int newOrderQuantity) {
-        return this.stock < (orderedQuantity + newOrderQuantity);
+    public void changeStatusPreparing() {
+        productInfo.preparing();
+    }
+
+    public void changeStatusSelling() {
+        productInfo.selling();
+    }
+
+    public void changeStatusSoldOut() {
+        productInfo.soldOut();
+    }
+
+    public static Builder builder(String name, BigDecimal price) {
+        return new Builder(name, price);
+    }
+
+    public static class Builder {
+
+        private final Product product = new Product();
+
+        public Builder(String name, BigDecimal price) {
+            product.productInfo = new ProductInfo(name, price);
+        }
+
+        public Builder id(Long id) {
+            product.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            ProductInfo productInfo = product.productInfo;
+            product.productInfo = new ProductInfo(name, productInfo.getPrice());
+            return this;
+        }
+
+        public Builder price(BigDecimal price) {
+            ProductInfo productInfo = product.productInfo;
+            product.productInfo = new ProductInfo(productInfo.getProductName(), price);
+            return this;
+        }
+
+        public Builder stock(int stock) {
+            product.stock = stock;
+            return this;
+        }
+
+        public Product build() {
+            return product;
+        }
     }
 
 }

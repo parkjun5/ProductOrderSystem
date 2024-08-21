@@ -3,19 +3,22 @@ package kr.co.system.homework.order.ui.dto;
 import kr.co.system.homework.legacy.order.v2.domain.OrderItemV2;
 import kr.co.system.homework.legacy.product.v2.domain.ProductV2;
 import kr.co.system.homework.order.domain.OrderItem;
+import kr.co.system.homework.order.domain.OrderItemStatus;
 import kr.co.system.homework.product.domain.Product;
 
 public record OrderItemResponse(
         Long productId,
         String productName,
-        int quantity
+        int quantity,
+        String orderItemStatus
 ) {
     public static OrderItemResponse from(OrderItem orderItem) {
         Product product = orderItem.getProduct();
         return new OrderItemResponse(
                 product.getId(),
                 product.getProductInfo().getProductName(),
-                orderItem.getSelectedQuantity()
+                orderItem.getSelectedQuantity(),
+                orderItem.getOrderItemStatus().name()
         );
     }
 
@@ -24,7 +27,8 @@ public record OrderItemResponse(
         return new OrderItemResponse(
                 product.getId(),
                 product.getProductInfo().getProductName(),
-                orderItem.getQuantity()
+                orderItem.getQuantity(),
+                OrderItemStatus.ORDERED.name()
         );
     }
 }

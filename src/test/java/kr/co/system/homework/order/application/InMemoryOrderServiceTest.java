@@ -14,7 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static kr.co.system.homework.order.domain.CartFixture.cart;
-import static kr.co.system.homework.product.domain.ProductFixture.product;
+import static kr.co.system.homework.product.domain.ProductV1Fixture.product;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class InMemoryOrderServiceTest {

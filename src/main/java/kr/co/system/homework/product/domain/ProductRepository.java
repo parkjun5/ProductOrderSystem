@@ -1,6 +1,7 @@
 package kr.co.system.homework.product.domain;
 
-import kr.co.system.homework.legacy.product.v2.domain.ProductV2;
+import kr.co.system.homework.order.domain.OrderItemStatus;
+import kr.co.system.homework.product.ui.dto.ProductStockView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,13 +12,13 @@ public interface ProductRepository {
 
     Optional<Product> findById(Long productId);
 
-    List<Product> findProductsInStock();
+    List<ProductStockView> findSellingProducts(ProductStatus productStatus, List<OrderItemStatus> excludedStatuses);
 
     Page<Product> findProductsInStockWithPage(Pageable pageable);
 
     void batchInsert(List<Product> product, int batchSize);
 
-    ProductV2 save(Product product);
+    Product save(Product product);
 
     List<Product> findAll();
 

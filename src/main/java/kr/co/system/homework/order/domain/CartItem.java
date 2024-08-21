@@ -22,13 +22,10 @@ public class CartItem {
     }
 
     public void addQuantity(String orderedQuantity) {
-
         try {
-            this.quantity = Integer.parseInt((orderedQuantity));
+            this.quantity += Integer.parseInt(orderedQuantity);
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException("잘못된 값이 입력되었습니다. orderedQuantity = " + orderedQuantity);
         }
-
-        this.quantity += quantity;
     }
 }

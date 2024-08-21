@@ -2,9 +2,10 @@ package kr.co.system.homework.support.ui;
 
 import jakarta.persistence.EntityNotFoundException;
 import kr.co.system.homework.support.exception.SoldOutException;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
 import org.apache.coyote.BadRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,10 @@ import javax.naming.AuthenticationException;
 import java.util.IllegalFormatException;
 import java.util.NoSuchElementException;
 
-@Slf4j
 @RestControllerAdvice(basePackages = "kr.co._39cm.homework")
 public class GlobalExceptionHandler {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler({IllegalStateException.class, IllegalFormatException.class,
             IllegalArgumentException.class, NoSuchElementException.class, TypeMismatchException.class})
@@ -70,8 +72,7 @@ public class GlobalExceptionHandler {
 
     private ResponseEntity<Object> getErrorResponseBy(String message,
                                                       HttpStatus httpStatus) {
-        log.error(message);
-
+        logger.error(message);
         return ResponseEntity.status(httpStatus)
                 .body(new ErrorDataResponse(httpStatus.getReasonPhrase(), message));
     }

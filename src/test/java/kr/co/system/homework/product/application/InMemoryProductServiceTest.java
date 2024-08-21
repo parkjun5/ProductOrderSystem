@@ -5,7 +5,7 @@ import kr.co.system.homework.legacy.product.v1.application.ProductV1Converter;
 import kr.co.system.homework.legacy.product.v1.application.ProductV1Service;
 import kr.co.system.homework.legacy.product.v1.domain.ProductV1;
 import kr.co.system.homework.order.domain.Cart;
-import kr.co.system.homework.product.domain.ProductFixture;
+import kr.co.system.homework.product.domain.ProductV1Fixture;
 import kr.co.system.homework.product.infra.InMemoryProductV1Repository;
 import kr.co.system.homework.support.exception.SoldOutException;
 import org.apache.commons.csv.CSVFormat;
@@ -36,7 +36,7 @@ class InMemoryProductServiceTest {
     @DisplayName("재고가 충분한 지 확인한다.")
     void validateStockForOrder() {
         // given
-        ProductV1 product = ProductFixture.product();
+        ProductV1 product = ProductV1Fixture.product();
         productRepository.save(product);
 
         // when
@@ -50,7 +50,7 @@ class InMemoryProductServiceTest {
     @DisplayName("재고가 부족하면 SoldOutException이 발생한다.")
     void validateStockForOrder2() {
         // given
-        ProductV1 product = ProductFixture.product();
+        ProductV1 product = ProductV1Fixture.product();
         productRepository.save(product);
 
         // when
@@ -67,11 +67,11 @@ class InMemoryProductServiceTest {
     @DisplayName("재고가 1이상인 주문가능한 상품들만 가져온다.")
     void getAvailableProducts() {
         // given
-        ProductV1 product1 = ProductFixture.product("1", "10");
-        ProductV1 product2 = ProductFixture.product("2", "15");
-        ProductV1 product3 = ProductFixture.product("3", "20");
-        ProductV1 product4 = ProductFixture.product("4", "0");
-        ProductV1 product5 = ProductFixture.product("5", "-1");
+        ProductV1 product1 = ProductV1Fixture.product("1", "10");
+        ProductV1 product2 = ProductV1Fixture.product("2", "15");
+        ProductV1 product3 = ProductV1Fixture.product("3", "20");
+        ProductV1 product4 = ProductV1Fixture.product("4", "0");
+        ProductV1 product5 = ProductV1Fixture.product("5", "-1");
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);

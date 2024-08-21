@@ -15,10 +15,11 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Entity
 @Getter
+@Table(name = "orders")
 public class Order extends AggregateRoot<Order, Long> {
 
     @Id @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "orders_id")
     private Long id;
 
     @Version
@@ -26,7 +27,7 @@ public class Order extends AggregateRoot<Order, Long> {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(
-            name = "order_id",
+            name = "orders_id",
             nullable = false,
             foreignKey = @ForeignKey(name = "fk_order_item_to_order")
     )

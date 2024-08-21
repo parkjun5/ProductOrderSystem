@@ -1,4 +1,4 @@
-package kr.co.system.homework.product;
+package kr.co.system.homework.product.domain;
 
 import kr.co.system.homework.legacy.product.v2.domain.ProductV2;
 

@@ -1,4 +1,4 @@
-package kr.co.system.stock.order_item;
+package kr.co.system.stock.order_item.domain;
 
 import jakarta.persistence.*;
 import kr.co.system.stock.product.Product;
@@ -30,24 +30,6 @@ public class OrderItem extends DomainEntity<OrderItem, Long> {
 
     protected OrderItem() {
 
-    }
-
-    public static OrderItem of(Product product, int selectedQuantity) {
-        if (product == null) {
-            throw new IllegalArgumentException("product는 비어있을 수 없습니다.");
-        }
-        if (selectedQuantity == 0) {
-            throw new IllegalArgumentException("Item의 수량은 0 일 수 없습니다");
-        }
-
-        OrderItem orderItem = new OrderItem();
-        orderItem.selectedQuantity = selectedQuantity;
-        orderItem.product = product;
-        return orderItem;
-    }
-
-    public BigDecimal getTotalItemsPrice() {
-        return this.product.getProductInfo().getPrice().multiply(new BigDecimal(selectedQuantity));
     }
 
     public void accepted() {

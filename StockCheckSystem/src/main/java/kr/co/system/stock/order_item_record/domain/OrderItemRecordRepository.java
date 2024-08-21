@@ -1,4 +1,4 @@
-package kr.co.system.stock.order_item;
+package kr.co.system.stock.order_item_record.domain;
 
 import java.util.List;
 

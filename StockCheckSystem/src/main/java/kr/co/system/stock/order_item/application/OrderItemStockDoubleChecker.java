@@ -1,9 +1,8 @@
-package kr.co.system.stock.order;
+package kr.co.system.stock.order_item.application;
 
-import kr.co.system.stock.order_item.OrderItem;
-import kr.co.system.stock.order_item.OrderItemRecord;
-import kr.co.system.stock.order_item.OrderItemService;
-import kr.co.system.stock.order_item.OrderedItemRecordService;
+import kr.co.system.stock.order_item.domain.OrderItem;
+import kr.co.system.stock.order_item_record.application.OrderedItemRecordService;
+import kr.co.system.stock.order_item_record.domain.OrderItemRecord;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

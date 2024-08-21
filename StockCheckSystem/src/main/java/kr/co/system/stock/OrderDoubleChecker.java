@@ -1,8 +1,8 @@
 package kr.co.system.stock;
 
-import kr.co.system.stock.order.OrderItemStockDoubleChecker;
-import kr.co.system.stock.order_item.OrderItem;
-import kr.co.system.stock.order_item.OrderedItemRecordService;
+import kr.co.system.stock.order_item.application.OrderItemStockDoubleChecker;
+import kr.co.system.stock.order_item.domain.OrderItem;
+import kr.co.system.stock.order_item_record.application.OrderedItemRecordService;
 import org.hibernate.exception.LockAcquisitionException;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;

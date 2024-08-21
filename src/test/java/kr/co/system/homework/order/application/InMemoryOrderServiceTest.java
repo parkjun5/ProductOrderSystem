@@ -3,11 +3,11 @@ package kr.co.system.homework.order.application;
 import kr.co.system.homework.legacy.order.v1.application.OrderV1Service;
 import kr.co.system.homework.order.domain.Cart;
 import kr.co.system.homework.legacy.order.v1.domain.OrderV1;
-import kr.co.system.homework.order.infra.InMemoryOrderRepository;
+import kr.co.system.homework.order.infra.InMemoryOrderV1Repository;
 import kr.co.system.homework.legacy.product.v1.application.ProductV1Converter;
 import kr.co.system.homework.legacy.product.v1.application.ProductV1Service;
 import kr.co.system.homework.legacy.product.v1.domain.ProductV1;
-import kr.co.system.homework.product.infra.InMemoryProductRepository;
+import kr.co.system.homework.product.infra.InMemoryProductV1Repository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class InMemoryOrderServiceTest {
 
-    private final InMemoryProductRepository productRepository = new InMemoryProductRepository();
+    private final InMemoryProductV1Repository productRepository = new InMemoryProductV1Repository();
     private final ProductV1Service productService = new ProductV1Service(new ProductV1Converter(), productRepository);
-    private final InMemoryOrderRepository orderRepository = new InMemoryOrderRepository();
+    private final InMemoryOrderV1Repository orderRepository = new InMemoryOrderV1Repository();
     private final OrderV1Service orderService = new OrderV1Service(productService, orderRepository);
     @ParameterizedTest
     @ValueSource(strings = {"1", "3", "5", "7"})
@@ -38,7 +38,7 @@ class InMemoryOrderServiceTest {
         // then
         int except = 10 - Integer.parseInt(requiredQuantity);
         assertThat(product.getStock()).isEqualTo(except);
-        Assertions.assertThat(order.getOrderItems().get(0).getProduct().getStock()).isEqualTo(except);
+        Assertions.assertThat(order.getOrderItems().get(0).getProductV1().getStock()).isEqualTo(except);
     }
 
     @ParameterizedTest

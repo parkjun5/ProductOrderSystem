@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InMemoryProductRepository implements ProductV1Repository {
+public class InMemoryProductV1Repository implements ProductV1Repository {
     private final Map<Long, ProductV1> products = new HashMap<>();
 
     @Override

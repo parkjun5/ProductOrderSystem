@@ -1,4 +1,4 @@
-package kr.co.system.homework.legacy.order.v1.domain;
+package kr.co.system.homework.legacy.order.v2.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,29 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Table(name = "orders_v1")
+@Table(name = "orders_v2")
 @Entity
-public class OrderV1 {
+public class OrderV2 {
 
     @Id
-    @Column(name = "order_v1_id")
+    @Column(name = "order_v2_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "orderV1", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    private List<OrderItemV1> orderItems = new ArrayList<>();
+    @OneToMany(mappedBy = "orderV2", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    private List<OrderItemV2> orderItems = new ArrayList<>();
 
     private BigDecimal totalPrice;
 
-    protected OrderV1() {
+    protected OrderV2() {
     }
 
     @Transient
     private final DecimalFormat formatter = new DecimalFormat("#,##0");
 
-    public OrderV1(List<OrderItemV1> orderItems) {
+    public OrderV2(List<OrderItemV2> orderItems) {
         this.orderItems = orderItems;
-        for (OrderItemV1 orderItem : orderItems) {
+        for (OrderItemV2 orderItem : orderItems) {
             orderItem.changeOrder(this);
         }
         this.totalPrice = orderItems.stream()

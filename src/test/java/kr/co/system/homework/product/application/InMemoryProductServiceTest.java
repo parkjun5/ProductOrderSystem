@@ -1,13 +1,13 @@
 package kr.co.system.homework.product.application;
 
 import kr.co.system.homework.BigItemCreator;
-import kr.co.system.homework.order.domain.Cart;
 import kr.co.system.homework.legacy.product.v1.application.ProductV1Converter;
 import kr.co.system.homework.legacy.product.v1.application.ProductV1Service;
 import kr.co.system.homework.legacy.product.v1.domain.ProductV1;
-import kr.co.system.homework.product.infra.InMemoryProductRepository;
-import kr.co.system.homework.support.exception.SoldOutException;
+import kr.co.system.homework.order.domain.Cart;
 import kr.co.system.homework.product.domain.ProductFixture;
+import kr.co.system.homework.product.infra.InMemoryProductV1Repository;
+import kr.co.system.homework.support.exception.SoldOutException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -23,14 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static kr.co.system.homework.order.domain.CartFixture.cart;
-import static kr.co.system.homework.product.domain.ProductFixture.product;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class InMemoryProductServiceTest {
 
-    private final InMemoryProductRepository productRepository = new InMemoryProductRepository();
+    private final InMemoryProductV1Repository productRepository = new InMemoryProductV1Repository();
     private final ProductV1Service productService = new ProductV1Service(new ProductV1Converter(), productRepository);
 
     @Test
@@ -114,9 +113,7 @@ class InMemoryProductServiceTest {
         try (BufferedReader reader = Files.newBufferedReader(path);
              CSVParser parser = new CSVParser(reader, csvFormat)
         ) {
-            for (CSVRecord record : parser) {
-                batch.add(record);
-            }
+            parser.forEach(batch::add);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

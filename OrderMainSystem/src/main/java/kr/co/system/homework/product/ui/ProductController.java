@@ -1,9 +1,6 @@
 package kr.co.system.homework.product.ui;
 
-import kr.co.system.homework.ProductOrderProgramApplication;
-import kr.co.system.homework.legacy.product.v1.application.ProductV1Reader;
-import kr.co.system.homework.legacy.product.v1.application.ProductV1Service;
-import kr.co.system.homework.legacy.product.v1.domain.ProductV1;
+import kr.co.system.homework.OrderMainSystemApplication;
 import kr.co.system.homework.product.application.ProductReader;
 import kr.co.system.homework.product.application.ProductService;
 import kr.co.system.homework.product.domain.Product;
@@ -30,6 +27,6 @@ public class ProductController {
 
     @PostMapping
     public void addMoreInventory() {
-        productReader.addNewProductDataFrom(ProductOrderProgramApplication.BIG_INPUT_DATA_LOCATION);
+        productReader.addNewProductDataFrom(OrderMainSystemApplication.BIG_INPUT_DATA_LOCATION);
     }
 }

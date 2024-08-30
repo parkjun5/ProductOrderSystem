@@ -8,12 +8,17 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 public class OrderEventHandler {
 
+    private final OrderItemProducer orderItemProducer;
+
+    public OrderEventHandler(OrderItemProducer orderItemProducer) {
+        this.orderItemProducer = orderItemProducer;
+    }
+
     @Async
     @TransactionalEventListener
     public void handleOrderEvent(Order order) {
-        order.getOrderItems().forEach(orderItem -> {
-            // TODO: Kafka or rabbitMq publish Message
-        });
+        order.getOrderItems()
+             .forEach(orderItemProducer::sendOrderMessage);
     }
 
 }

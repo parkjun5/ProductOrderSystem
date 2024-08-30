@@ -6,8 +6,6 @@ import kr.co.system.stock.support.DomainEntity;
 import kr.co.system.stock.support.NotEnoughStockInProduct;
 import lombok.Getter;
 
-import java.math.BigDecimal;
-
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity

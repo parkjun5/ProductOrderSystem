@@ -27,7 +27,7 @@ public class OrderItemStockDoubleChecker {
         int alreadyOrderedQuantity = orderItemRecordsWithLock.stream()
                 .map(OrderItemRecord::getOrderedQuantity)
                 .reduce(0, Integer::sum);
-        orderItemService.checkHasEnoughStock(orderItem, alreadyOrderedQuantity);
+        orderItemService.changeStatusByStock(orderItem, alreadyOrderedQuantity);
     }
 
 }

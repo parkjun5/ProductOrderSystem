@@ -15,7 +15,7 @@ public class OrderItemService {
     }
 
     @Transactional
-    public void checkHasEnoughStock(OrderItem orderItem, int alreadyOrderedQuantity) {
+    public void changeStatusByStock(OrderItem orderItem, int alreadyOrderedQuantity) {
         orderItem.updateOrderItemStatusBasedOnStock(alreadyOrderedQuantity);
         jpaOrderItemRepository.save(orderItem);
     }
